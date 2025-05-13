@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ELA Analysis</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            text-align: center;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+            margin: 10px 0;
+        }
+        .upload-form {
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Error Level Analysis (ELA)</h1>
+        <form class="upload-form" method="POST" enctype="multipart/form-data">
+            <input type="file" name="file" accept="image/jpeg" required>
+            <label for="quality">Quality (1-100):</label>
+            <input type="number" name="quality" id="quality" min="1" max="100" value="95">
+            <button type="submit">Upload and Analyze</button>
+        </form>
+        {% if original and result %}
+        <h2>Original Image</h2>
+        <img src="{{ url_for('static', filename='uploads/' + original) }}" alt="Original Image">
+        <h2>ELA Result (Quality: {{ quality }})</h2>
+        <img src="{{ url_for('static', filename='results/' + result) }}" alt="ELA Result">
+        {% endif %}
+    </div>
+</body>
+</html>
