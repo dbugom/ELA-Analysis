@@ -8,7 +8,7 @@ This is a Flask-based web application for performing **Error Level Analysis (ELA
 - View the original image and the ELA result side by side.
 
 ## Demo
-![Screenshot](static/demo.png) *(Add a screenshot of your app here)*
+![Screenshot](static/demo.png) 
 
 ---
 
@@ -50,4 +50,4 @@ Usage:
 4-Click "Upload and Analyze" to generate the ELA result.
 5-View the Original and ELA result images on the page.
 
-
+Designe by Mohammad Razavi
