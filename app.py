@@ -13,14 +13,14 @@ os.makedirs(app.config['RESULT_FOLDER'], exist_ok=True)
 
 def perform_ela_analysis(input_image_path, output_image_path, quality=95):
     """
-    Perform Error Level Analysis (ELA) on an image to detect potential manipulations.
+    ELA Analysis 
     """
     temp_path = None
     try:
-        # Open the original image
+        # Open the  image
         original = Image.open(input_image_path)
         
-        # Create a temporary file for the recompressed image
+        # Create a temporary file 
         with tempfile.NamedTemporaryFile(delete=False, suffix=".jpg") as temp_file:
             temp_path = temp_file.name
             original.save(temp_path, "JPEG", quality=quality)
@@ -28,23 +28,23 @@ def perform_ela_analysis(input_image_path, output_image_path, quality=95):
         # Open the recompressed image
         recompressed = Image.open(temp_path)
         
-        # Perform ELA by finding the difference between the original and recompressed images
+        # Perform ELA
         ela_image = ImageChops.difference(original, recompressed)
         
-        # Enhance the differences for better visibility
+        # Enhance the differences
         extrema = ela_image.getextrema()
-        if isinstance(extrema[0], tuple):  # Multi-channel image (e.g., RGB)
+        if isinstance(extrema[0], tuple):  # RGB
             max_diff = max([ex[1] for ex in extrema])
-        else:  # Single-channel image (e.g., grayscale)
+        else:  # Grayscale
             max_diff = extrema[1]
 
         scale = 255.0 / max_diff if max_diff != 0 else 1
         ela_image = ImageEnhance.Brightness(ela_image).enhance(scale)
         
-        # Save the ELA result image
+        # Save the result
         ela_image.save(output_image_path)
     finally:
-        # Clean up the temporary file
+        # Clean up
         if temp_path and os.path.exists(temp_path):
             os.remove(temp_path)
 
@@ -58,7 +58,7 @@ def index():
         if file.filename == '':
             return redirect(request.url)
         
-        # Get the quality value from the form
+        # Get the quality value from the form: please use 75 for getting a better result
         quality = request.form.get('quality', 95)
         try:
             quality = int(quality)
